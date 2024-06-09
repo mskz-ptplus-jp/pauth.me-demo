@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phone number Authentication Client</title>
+</head>
+<body>
+  <h1>Phone number Authentication Example</h1>
+  <div id="events"></div>
+
+  <script src="auth.php"></script>
+  <script>
+    fetch(`${url}/api/v1/entry/6001`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    }).then(res => {
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      reader.read().then(async function progress({ done, value }) {
+        if (done) {
+          console.log('Stream complete');
+          return;
+        }
+        const data = JSON.parse(decoder.decode(value).replace(/^data: /, '').trim());
+        console.log(data);
+        return reader.read().then(progress);
+      });
+    });
+  </script>
+</body>
+</html>
