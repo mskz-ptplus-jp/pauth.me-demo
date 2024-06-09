@@ -1,0 +1,8 @@
+services:
+  client:
+    build: ./client
+    volumes:
+      - ./client/API_KEY:/usr/share/nginx/API_KEY
+      - ./client/html:/usr/share/nginx/html
+    ports:
+      - "3000:80"
