@@ -20,3 +20,5 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 
 # デフォルトのCMDを設定
 CMD ["php-fpm"]
+
+WORKDIR /usr/share/nginx/html
