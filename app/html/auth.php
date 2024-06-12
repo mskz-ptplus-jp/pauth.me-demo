@@ -17,7 +17,6 @@ $response = curl_exec($ch);
 if (curl_errno($ch)) {
     echo 'Error:' . curl_error($ch);
 } else {
-    // 応答を JSON としてデコードして表示
     $response_data = json_decode($response, true);
     echo implode("", [
         "const token = '{$response_data['token']}';",
