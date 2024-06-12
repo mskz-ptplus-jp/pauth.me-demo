@@ -5,7 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Phone number Authentication Client</title>
   <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="./assets/style.css" rel="stylesheet">
   <script src="./assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="auth.php"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      document.getElementById('entry').addEventListener('click', (event) => {
+        let phone = document.getElementById('phone').value;        
+        let events = document.getElementById('events');
+
+        if (!phone) {
+          return;
+        }
+
+        fetch(`${url}/api/v1/entry/${phone}`, {
+          method: 'GET',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        }).then(res => {
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+          reader.read().then(async function progress({ done, value }) {
+            if (done) {
+              console.log('Stream complete');
+              return;
+            }
+            const data = JSON.parse(decoder.decode(value).replace(/^data: /, '').trim());
+            console.log(data);
+            events.innerHTML += `<div>${JSON.stringify(data, null, 2)}</div>`;
+            return reader.read().then(progress);
+          });
+        });
+
+      });
+    });
+  </script>
 </head>
 <body>
   <div class="container">
@@ -16,33 +52,11 @@
       </svg>
       GitHub
     </a>
-    <div></div>
-    <div id="events"></div>
+    <div>
+      <input value="6001" type="number" id="phone" class="form-control" placeholder="Phone number">
+      <button id="entry" class="btn btn-primary">Send code</button>
+    </div>
+    <div id="events" class="overflow-auto"></div>
   </div>
-
-  <script src="auth.php"></script>
-  <script>
-    let events = document.getElementById('events');
-    fetch(`${url}/api/v1/entry/6001`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-    }).then(res => {
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      reader.read().then(async function progress({ done, value }) {
-        if (done) {
-          console.log('Stream complete');
-          return;
-        }
-        const data = JSON.parse(decoder.decode(value).replace(/^data: /, '').trim());
-        console.log(data);
-        events.innerHTML += `<div>${JSON.stringify(data, null, 2)}</div>`;
-        return reader.read().then(progress);
-      });
-    });
-  </script>
 </body>
 </html>
