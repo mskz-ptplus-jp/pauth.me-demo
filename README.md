@@ -8,7 +8,7 @@ docker compose up --build -d
 ```
 
 ```
-docker compose exec client /bin/sh
+docker compose exec app /bin/sh
 ```
 
 ```
