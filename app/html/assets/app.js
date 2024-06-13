@@ -34,6 +34,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     const applyModal = document.getElementById('applyModal');
+    applyModal.addEventListener('show.bs.modal', (event) => {
+      events.innerHTML = '';
+    });
     applyModal.addEventListener('hidden.bs.modal', (event) => {
       controller.abort();
-    });  });
+    });
+ });
