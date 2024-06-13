@@ -8,40 +8,7 @@
   <link href="./assets/style.css" rel="stylesheet">
   <script src="./assets/bootstrap/js/bootstrap.min.js"></script>
   <script src="auth.php"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      document.getElementById('entry').addEventListener('click', (event) => {
-        let phone = document.getElementById('phone').value;        
-        let events = document.getElementById('events');
-
-        if (!phone) {
-          return;
-        }
-
-        fetch(`${url}/api/v1/entry/${phone}`, {
-          method: 'GET',
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-        }).then(res => {
-          const reader = res.body.getReader();
-          const decoder = new TextDecoder();
-          reader.read().then(async function progress({ done, value }) {
-            if (done) {
-              console.log('Stream complete');
-              return;
-            }
-            const data = JSON.parse(decoder.decode(value).replace(/^data: /, '').trim());
-            console.log(data);
-            events.innerHTML += `<div>${JSON.stringify(data, null, 2)}</div>`;
-            return reader.read().then(progress);
-          });
-        });
-
-      });
-    });
-  </script>
+  <script src="./assets/app.js"></script>
 </head>
 <body>
   <div class="container">
@@ -61,10 +28,37 @@
         <input value="6001" type="number" id="phone" class="form-control" placeholder="Phone number">
       </div>
       <div class="col-auto">
-        <button id="entry" class="btn btn-primary">Send code</button>
+        <button type="button" id="entry" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#applyModal">
+          Send code
+        </button>
       </div>
     </div>
-    <div id="events" class="overflow-auto"></div>
+
+    <!-- Modal -->
+    <div class="modal" id="applyModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="applyModalLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>Call <a href="tel:05035581142">050-3558-1142</a></li>
+              <li>
+                <input type="number" id="pin" maxlength="4" class="form-control" placeholder="PIN">
+              </li>
+            </ul>
+            
+            <div id="events" class="overflow-auto"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Apply</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>
