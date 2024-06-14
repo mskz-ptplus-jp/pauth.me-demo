@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let controller;
   let phone = document.getElementById('phone').value;        
   let events = document.getElementById('events');
+
   document.getElementById('entry').addEventListener('click', (event) => {
 
       if (!phone) {
@@ -65,16 +66,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
 
-    });
+  });
 
-    const applyModal = document.getElementById('applyModal');
-    applyModal.addEventListener('show.bs.modal', (event) => {
-      pin.value = '';
-      events.innerHTML = '';
-    });
-    applyModal.addEventListener('hidden.bs.modal', (event) => {
-      if (controller) {
-        controller.abort();
-      }
-    });
+  const applyModal = document.getElementById('applyModal');
+  applyModal.addEventListener('show.bs.modal', (event) => {
+    pin.value = '';
+    events.innerHTML = '';
+  });
+  applyModal.addEventListener('hidden.bs.modal', (event) => {
+    if (controller) {
+      controller.abort();
+    }
+  });
  });
