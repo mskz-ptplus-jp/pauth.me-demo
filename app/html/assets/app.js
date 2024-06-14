@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
           }
 
-          events.innerHTML += `<div>${JSON.stringify(data, null, 2)}</div>`;
+          events.innerHTML = `<div>${JSON.stringify(data, null, 2)}</div>`
+                           + events.innerHTML;
           return reader.read().then(progress);
         }).catch(err => {
           if (err.name === 'AbortError') {
