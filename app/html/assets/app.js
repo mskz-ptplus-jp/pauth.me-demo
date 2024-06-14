@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', async () => {
+  let controller;
   let phone = document.getElementById('phone').value;        
   let events = document.getElementById('events');
-document.getElementById('entry').addEventListener('click', (event) => {
+  document.getElementById('entry').addEventListener('click', (event) => {
 
       if (!phone) {
         return;
@@ -48,7 +49,19 @@ document.getElementById('entry').addEventListener('click', (event) => {
 
           events.innerHTML += `<div>${JSON.stringify(data, null, 2)}</div>`;
           return reader.read().then(progress);
+        }).catch(err => {
+          if (err.name === 'AbortError') {
+            console.log('Stream reading aborted');
+          } else {
+            console.error('Stream reading error:', err);
+          }
         });
+      }).catch(err => {
+        if (err.name === 'AbortError') {
+          console.log('Fetch aborted');
+        } else {
+          console.error('Fetch error:', err);
+        }
       });
 
     });
@@ -59,6 +72,8 @@ document.getElementById('entry').addEventListener('click', (event) => {
       events.innerHTML = '';
     });
     applyModal.addEventListener('hidden.bs.modal', (event) => {
-      controller.abort();
+      if (controller) {
+        controller.abort();
+      }
     });
  });
