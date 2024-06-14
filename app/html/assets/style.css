@@ -2,10 +2,6 @@
     --bs-primary-rgb: 122, 65, 113;
 }
 
-#events {
-    height: 40vh;
-}
-
 .btn-primary {
     --bs-btn-bg: #7a4171;
     --bs-btn-border-color: #7a4171;
@@ -43,4 +39,8 @@
 .text-primary {
     --bs-text-opacity: 1;
     color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
+}
+
+#events {
+    height: 40vh;
 }
