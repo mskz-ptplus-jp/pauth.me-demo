@@ -39,7 +39,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="applyModalLabel">Modal title</h1>
+            <h1 class="modal-title fs-5" id="applyModalLabel"></h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -47,9 +47,9 @@
               <li class="p-3">Call <a href="tel:05035581142">050-3558-1142</a></li>
               <li class="p-3">
                 <div class="row">
-                  <div class="col-3">
+                  <div class="col-4">
                     <input type="number" id="pin" maxlength="4"
-                    class="form-control"
+                    class="form-control fs-1 text-success text-center"
                     placeholder="Waiting ..." readonly>
                   </div>
                   <div class="col-auto">
@@ -65,12 +65,12 @@
                   <div class="col-3">
                     <input type="number" id="confirmation-pin"
                      maxlength="4"
-                     class="form-control"
+                     class="form-control text-center"
                      placeholder="PIN" title="Confirmation PIN"
                      disabled>
                   </div>
                   <div class="col-auto d-none">
-                    <span>Confirmation PIN.</span>
+                    <button type="button" class="btn btn-primary">Apply</button>
                   </div>
                 </div>
               </li>
@@ -80,7 +80,6 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Apply</button>
           </div>
         </div>
       </div>

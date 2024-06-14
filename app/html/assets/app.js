@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           if(data.pin) {
             pin.value = data.pin;
 
-            let sibling = pin.closest('.col-3').nextElementSibling;
+            let sibling = pin.closest('.col-4').nextElementSibling;
             while (sibling) {
               sibling.classList.add('d-none');
               sibling = sibling.nextElementSibling;
