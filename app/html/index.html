@@ -47,27 +47,29 @@
               <li class="p-3">Call <a href="tel:05035581142">050-3558-1142</a></li>
               <li class="p-3">
                 <div class="row">
-                  <div class="col-4">
+                  <div class="col-3">
                     <input type="number" id="pin" maxlength="4"
-                    class="form-control col-2"
-                    placeholder="PIN" readonly>
+                    class="form-control"
+                    placeholder="Waiting ..." readonly>
                   </div>
-                  <div class="col-auto">
-                    <div class="spinner-border text-primary" role="status">
+                  <div class="col-auto align-middle">
+                    <div class="spinner-border spinner-border-sm text-primary" role="status">
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                    Waiting for call.
+                    <span class="align-middle">Waiting for call.</span>
                   </div>
                 </div>
               </li>
               <li class="p-3">
                 <div class="row">
-                  <div class="col-4">
-                    <input type="number" id="Confirmation-PIN"
+                  <div class="col-3">
+                    <input type="number" id="confirmation-pin"
                      maxlength="4"
-                     class="form-control" placeholder="Confirmation PIN">
+                     class="form-control"
+                     placeholder="PIN" title="Confirmation PIN">
                   </div>
                   <div class="col-auto">
+                    <span class="align-middle">Confirmation PIN.</span>
                   </div>
                 </div>
               </li>

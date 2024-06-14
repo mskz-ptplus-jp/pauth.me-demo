@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         },
         signal: signal,
       }).then(res => {
+        let pin = document.getElementById('pin');
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         reader.read().then(async function progress({ done, value }) {
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
           const data = JSON.parse(decoder.decode(value).replace(/^data: /, '').trim());
           console.log(data);
+          pin.value = data.pin;
           events.innerHTML += `<div>${JSON.stringify(data, null, 2)}</div>`;
           return reader.read().then(progress);
         });
