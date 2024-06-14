@@ -52,11 +52,11 @@
                     class="form-control"
                     placeholder="Waiting ..." readonly>
                   </div>
-                  <div class="col-auto align-middle">
+                  <div class="col-auto">
                     <div class="spinner-border spinner-border-sm text-primary" role="status">
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                    <span class="align-middle">Waiting for call.</span>
+                    <span>Waiting for call.</span>
                   </div>
                 </div>
               </li>
@@ -66,10 +66,11 @@
                     <input type="number" id="confirmation-pin"
                      maxlength="4"
                      class="form-control"
-                     placeholder="PIN" title="Confirmation PIN">
+                     placeholder="PIN" title="Confirmation PIN"
+                     disabled>
                   </div>
-                  <div class="col-auto">
-                    <span class="align-middle">Confirmation PIN.</span>
+                  <div class="col-auto d-none">
+                    <span>Confirmation PIN.</span>
                   </div>
                 </div>
               </li>

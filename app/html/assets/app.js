@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    document.getElementById('entry').addEventListener('click', (event) => {
-      let phone = document.getElementById('phone').value;        
-      let events = document.getElementById('events');
+  let phone = document.getElementById('phone').value;        
+  let events = document.getElementById('events');
+document.getElementById('entry').addEventListener('click', (event) => {
 
       if (!phone) {
         return;
@@ -27,7 +27,25 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
           const data = JSON.parse(decoder.decode(value).replace(/^data: /, '').trim());
           console.log(data);
-          pin.value = data.pin;
+
+          if(data.pin) {
+            pin.value = data.pin;
+
+            let sibling = pin.closest('.col-3').nextElementSibling;
+            while (sibling) {
+              sibling.classList.add('d-none');
+              sibling = sibling.nextElementSibling;
+            }
+
+            document.getElementById('confirmation-pin').removeAttribute('disabled');
+            sibling = document.getElementById('confirmation-pin')
+                      .closest('.col-3').nextElementSibling;
+            while (sibling) {
+              sibling.classList.remove('d-none');
+              sibling = sibling.nextElementSibling;
+            }
+          }
+
           events.innerHTML += `<div>${JSON.stringify(data, null, 2)}</div>`;
           return reader.read().then(progress);
         });
@@ -37,6 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const applyModal = document.getElementById('applyModal');
     applyModal.addEventListener('show.bs.modal', (event) => {
+      pin.value = '';
       events.innerHTML = '';
     });
     applyModal.addEventListener('hidden.bs.modal', (event) => {
