@@ -2,19 +2,19 @@
 $API_KEY = file_get_contents(__DIR__ . '/../API_KEY');
 $AP_URL = file_get_contents(__DIR__ . '/../AP_URL');
 
-// cURL
-$ch = curl_init("{$AP_URL}/api/v1/auth");
-curl_setopt($ch, CURLOPT_HTTPGET, 1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    "api-key: {$API_KEY}"
-]);
+$response = file_get_contents(
+    "{$AP_URL}/api/v1/auth",
+    false,
+    stream_context_create([
+        "http" => [
+            "header" => "api-key: {$API_KEY}\r\n",
+            "method" => "GET",
+        ],
+    ])
+);
 
-// Request
-$response = curl_exec($ch);
-
-if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
+if ($response === FALSE) {
+    echo 'Error: Failed to fetch data';
 } else {
     $response_data = json_decode($response, true);
     echo implode("", [
@@ -22,5 +22,3 @@ if (curl_errno($ch)) {
         "const url = '{$AP_URL}';",
     ]);
 }
-
-curl_close($ch);
