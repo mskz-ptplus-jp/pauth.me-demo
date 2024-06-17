@@ -4,12 +4,11 @@ $AP_URL = file_get_contents(__DIR__ . '/../AP_URL');
 
 // cURL
 $ch = curl_init("{$AP_URL}/api/v1/auth");
-curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_HTTPGET, 1);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-    "api_key" => $API_KEY,
-]));
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "api-key: {$API_KEY}"
+]);
 
 // Request
 $response = curl_exec($ch);
