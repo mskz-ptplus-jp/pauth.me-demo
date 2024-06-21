@@ -1,5 +1,6 @@
-# Phone number Authentication Client
+# pauth.me Demo
 
+[Demo](https://demo.pauth.me)
 
 ## Run
 
