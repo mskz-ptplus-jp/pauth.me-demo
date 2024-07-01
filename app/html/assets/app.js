@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
   let controller;
-  let phone = document.getElementById('phone').value;        
   let events = document.getElementById('events');
 
   document.getElementById('entry').addEventListener('click', (event) => {
+    let phone = document.getElementById('phone').value;        
 
       if (!phone) {
         return;
