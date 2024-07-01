@@ -3,11 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let events = document.getElementById('events');
 
   document.getElementById('entry').addEventListener('click', (event) => {
-<<<<<<< Updated upstream
-    let phone = document.getElementById('phone').value;        
-=======
     let phone = document.getElementById('phone').value;
->>>>>>> Stashed changes
 
       if (!phone) {
         return;
