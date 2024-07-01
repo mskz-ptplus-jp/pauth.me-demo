@@ -1,6 +1,6 @@
 <?php
-$API_KEY = file_get_contents(__DIR__ . '/../API_KEY');
-$AP_URL = file_get_contents(__DIR__ . '/../AP_URL');
+$API_KEY = trim(file_get_contents(__DIR__ . '/../API_KEY'));
+$AP_URL = trim(file_get_contents(__DIR__ . '/../AP_URL'));
 
 $response = file_get_contents(
     "{$AP_URL}/api/v1/auth",
