@@ -68,9 +68,58 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   });
 
+  // Apply button click handler - verify PIN
+  document.querySelector('#applyModal .btn-primary:not([data-bs-toggle])').addEventListener('click', async (event) => {
+    const phone = document.getElementById('phone').value;
+    const confirmationPin = document.getElementById('confirmation-pin').value;
+
+    if (!phone || !confirmationPin) {
+      return;
+    }
+
+    const button = event.target;
+    button.disabled = true;
+    button.textContent = 'Verifying...';
+
+    try {
+      const res = await fetch(`${url}/api/v1/apply?callerd_number=${encodeURIComponent(phone)}&pin=${encodeURIComponent(confirmationPin)}`, {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        events.innerHTML = `<div class="text-success fw-bold">Verified successfully!</div>` + events.innerHTML;
+        button.textContent = 'Verified';
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-success');
+      } else {
+        events.innerHTML = `<div class="text-danger fw-bold">Verification failed. (${res.status})</div>` + events.innerHTML;
+        button.textContent = 'Apply';
+        button.disabled = false;
+      }
+    } catch (err) {
+      console.error('Apply error:', err);
+      events.innerHTML = `<div class="text-danger fw-bold">Error: ${err.message}</div>` + events.innerHTML;
+      button.textContent = 'Apply';
+      button.disabled = false;
+    }
+  });
+
   const applyModal = document.getElementById('applyModal');
   applyModal.addEventListener('show.bs.modal', (event) => {
-    pin.value = '';
+    document.getElementById('pin').value = '';
+    document.getElementById('confirmation-pin').value = '';
+    document.getElementById('confirmation-pin').setAttribute('disabled', '');
+    const applyBtn = document.querySelector('#applyModal .btn-primary:not([data-bs-toggle]), #applyModal .btn-success');
+    if (applyBtn) {
+      applyBtn.textContent = 'Apply';
+      applyBtn.disabled = false;
+      applyBtn.classList.remove('btn-success');
+      applyBtn.classList.add('btn-primary');
+    }
     events.innerHTML = '';
   });
   applyModal.addEventListener('hidden.bs.modal', (event) => {
