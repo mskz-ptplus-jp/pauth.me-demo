@@ -68,67 +68,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   });
 
-  // Apply button - use event delegation on modal to ensure it works
-  document.getElementById('applyModal').addEventListener('click', async (event) => {
-    const button = event.target.closest('#apply-btn');
-    if (!button) return;
-
-    const phone = document.getElementById('phone').value;
-    const confirmationPin = document.getElementById('confirmation-pin').value;
-
-    if (!phone || !confirmationPin) {
-      events.innerHTML = `<div class="text-warning">Please enter the PIN.</div>` + events.innerHTML;
-      return;
-    }
-
-    button.disabled = true;
-    button.textContent = 'Verifying...';
-
-    try {
-      const res = await fetch(`${url}/api/v1/apply?callerd_number=${encodeURIComponent(phone)}&pin=${encodeURIComponent(confirmationPin)}`, {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-      });
-
-      const data = await res.json().catch(() => null);
-
-      if (res.ok) {
-        events.innerHTML = `<div class="text-success fw-bold">Verified successfully!</div>` + events.innerHTML;
-        button.textContent = 'Verified';
-        button.classList.remove('btn-primary');
-        button.classList.add('btn-success');
-      } else {
-        events.innerHTML = `<div class="text-danger fw-bold">Verification failed. (${res.status})</div>` + events.innerHTML;
-        button.textContent = 'Apply';
-        button.disabled = false;
-      }
-
-      if (data) {
-        events.innerHTML = `<div>${JSON.stringify(data, null, 2)}</div>` + events.innerHTML;
-      }
-    } catch (err) {
-      console.error('Apply error:', err);
-      events.innerHTML = `<div class="text-danger fw-bold">Error: ${err.message}</div>` + events.innerHTML;
-      button.textContent = 'Apply';
-      button.disabled = false;
-    }
-  });
-
   const applyModal = document.getElementById('applyModal');
   applyModal.addEventListener('show.bs.modal', (event) => {
-    document.getElementById('pin').value = '';
-    document.getElementById('confirmation-pin').value = '';
-    document.getElementById('confirmation-pin').setAttribute('disabled', '');
-    const applyBtn = document.getElementById('apply-btn');
-    if (applyBtn) {
-      applyBtn.textContent = 'Apply';
-      applyBtn.disabled = false;
-      applyBtn.classList.remove('btn-success');
-      applyBtn.classList.add('btn-primary');
-    }
+    pin.value = '';
     events.innerHTML = '';
   });
   applyModal.addEventListener('hidden.bs.modal', (event) => {
